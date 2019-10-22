@@ -41,26 +41,23 @@ exports.postProduct = async (req, res) => {
 
   image.name = imgName;
 
-  const product = await Product.findOne({ where: { title } });
+  let product = await Product.findOne({ where: { title } });
   if (product)
     return res.status(400).json({
       success: false,
-      msg: 'product with the same title exists...',
-      product
+      msg: 'product with the same title exists...'
     });
 
-  image
-    .mv(`./uploads/${imgName}`)
-    .then(() => {
-      Product.create({
-        title,
-        description,
-        price,
-        image: image.name,
-        userId: req.user.id
-      });
+  image.name = `${Date.now()}-${image.name}`;
 
-      res.json({ success: true, msg: 'Add product successfully...' });
-    })
-    .catch(err => console.error('Failed to upload image', err));
+  await image.mv(`./uploads/${imgName}`);
+  product = await Product.create({
+    title,
+    description,
+    price,
+    image: image.name,
+    userId: req.user.id
+  });
+
+  res.json({ success: true, msg: 'Add product successfully...', product });
 };
