@@ -1,25 +1,26 @@
 version: "3"
 services:
   app:
-    container_name: docker-node-mysql
+    container_name: node-mysql-start
     restart: always
     build: .
+    ports:
+      - "80:3000"
     links:
-      - mysql
-    ports:
-      - "5000:3000"
-
-  mysql:
-    container_name: mysql
-    image: mysql/mysql-server
-    ports:
-      - "3306:3306"
+      - mysql-db
+  mysql-db:
+    image: mysql/mysql-server:8.0
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: node_complete_guide
-
+      MYSQL_DATABASE: ecommerce-shop
+      MYSQL_USER: root
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
   client:
-    image: mysql/mysql-server
+    image: mysql/mysql-server:8.0
     depends_on:
-      - mysql
-    command: mysql -uroot -ppassword -hmysql node_complete_guide
+      - mysql-db
+    command: mysql -uroot -ppassword -hmysql-db ecommerce-shop

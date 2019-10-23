@@ -1,14 +1,14 @@
 {
-  "name": "node-sql",
+  "name": "ecommerce-docker_web_app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node.js Ecommerce App on Docker",
+  "author": "Wabomba Bakar",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "app-root-path": "^2.2.1",
@@ -37,9 +37,5 @@
     "winston": "^2.4.0",
     "winston-mongodb": "^3.0.0",
     "winston-mysql": "^0.9.0"
-  },
-  "devDependencies": {
-    "jest": "^24.8.0",
-    "supertest": "^4.0.2"
   }
 }
